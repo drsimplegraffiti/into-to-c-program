@@ -23,10 +23,10 @@ int main(void)
     printf("%d\n", age);
 
     char initial = 'D';
-    printf("%c\n", initial);
+    printf("%c\n", initial); 
 
     float fp = 45.90;
-    printf("%f\n", fp);
+    printf("%f\n", fp); // the "%f" is a format specifier. It tells the printf function to print a float.
 
     double d = 45.90;
     printf("%f\n", d);
@@ -58,6 +58,30 @@ Rename the output file to main and run the following command in the terminal.
 
 ```bash
 gcc main.c -o main
+```
+
+#### Format Specifiers
+The format specifiers are used to tell the printf function what type of data to print.
+
+```c
+#include <stdio.h> //header file: contains the declaration of printf function.
+
+int main(void)
+{
+    int age = 90;
+    printf("%d\n", age);
+
+    char initial = 'D';
+    printf("%c\n", initial); 
+
+    float fp = 45.90;
+    printf("%f\n", fp); // the "%f" is a format specifier. It tells the printf function to print a float.
+
+    double d = 45.90;
+    printf("%f\n", d);
+
+    return 0;
+}
 ```
 
 
@@ -653,6 +677,636 @@ int main(void)
 
     pNums -= 2; // decrement the pointer to point to the previous element in the array
     printf("%d\n", *pNums);
+
+    return 0;
+}
+```
+
+
+#### structs
+
+structs are used to group related data together.
+
+```c
+
+#include <stdio.h>
+
+struct Student
+{
+    char name[50];
+    char major[50];
+    int age;
+    double gpa;
+};
+
+int main(void)
+{
+    struct Student student1;
+    student1.age = 22;
+    student1.gpa = 3.2;
+    strcpy(student1.name, "dave");
+    strcpy(student1.major, "computer science");
+
+    printf("%s\n", student1.name);
+    printf("%s\n", student1.major);
+    printf("%d\n", student1.age);
+    printf("%f\n", student1.gpa);
+
+    return 0;
+}
+```
+
+
+#### Enum
+enum is a custom data type that allows us to define a set of constants.
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    enum Company {GOOGLE, FACEBOOK, XEROX, YAHOO, EBAY, MICROSOFT};
+
+    enum Company xerox = XEROX;
+    enum Company google = GOOGLE;
+    enum Company ebay = EBAY;
+
+    printf("%d\n", xerox);
+    printf("%d\n", google);
+    printf("%d\n", ebay);
+
+    return 0;
+}
+```
+
+#### Boolean
+
+```c
+#include <stdio.h>
+#include <stdbool.h>
+
+int main(void)
+{
+    bool isMale = true;
+    printf("%d\n", isMale);
+
+    return 0;
+}
+```
+
+#### File IO
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    FILE *fpointer = fopen("employees.txt", "w"); // w is for write mode
+
+    fprintf(fpointer, "Jim, Salesman\nPam, Receptionist\nOscar, Accounting");
+
+    fclose(fpointer);
+
+    return 0;
+}
+```
+
+#### Reading Files
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    char line[255];
+    FILE *fpointer = fopen("employees.txt", "r"); // r is for read mode
+
+    fgets(line, 255, fpointer); // read the first line
+    printf("%s", line);
+
+    fgets(line, 255, fpointer); // read the second line
+    printf("%s", line);
+
+    fgets(line, 255, fpointer); // read the third line
+    printf("%s", line);
+
+    fclose(fpointer);
+
+    return 0;
+}
+```
+
+
+#### Reading Files with a Loop
+
+```c
+#include <stdio.h>
+
+int main(void)
+{
+    char line[255];
+    FILE *fpointer = fopen("employees.txt", "r"); // r is for read mode
+
+    while (fgets(line, 255, fpointer) != NULL)
+    {
+        printf("%s", line);
+    }
+
+    fclose(fpointer);
+
+    return 0;
+}
+```
+
+#### Preprocessor Directives
+
+```c
+#include <stdio.h> // this is a header file. It contains the declaration of printf function.
+#include <stdlib.h> // this is a header file. It contains the declaration of malloc function.
+
+int main(void)
+{
+    printf("Hello World\n");
+
+    return 0;
+}
+```
+
+
+#### Macros
+Macros are constants, they are defined using the #define directive. They are not variables, they are just a text replacement.
+```c
+#include <stdio.h> 
+#include <stdlib.h> 
+
+#define PI 3.14 // macros are constants, they are defined using the #define directive
+
+int main(void)
+{
+    printf("%f\n", PI);
+
+    return 0;
+}
+```
+
+#### Conditional Compilation
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define PI 3.14 // macros are constants, they are defined using the #define directive
+
+int main(void)
+{
+    #ifdef PI
+        printf("%f\n", PI);
+    #else
+        printf("PI is not defined\n");
+    #endif
+
+    return 0;
+}
+```
+
+#### import files from another directory
+
+Create a folder called utils and create a file called utils.h and utils.c. Add the following code to the utils.h file.
+.h are header files. They contain the declaration of functions.
+
+```c
+#ifndef UTILS_H_ // if UTILS_H_ is not defined
+#define UTILS_H_ // define UTILS_H_
+
+void sayHi(char name[]);
+
+#endif // end of if statement
+```
+
+Add the following code to the utils.c file.
+.c files contain the definition of functions.
+
+```c
+#include <stdio.h>
+#include "utils.h"
+
+void sayHi(char name[])
+{
+    printf("Hi %s\n", name);
+}
+```
+
+Add the following code to the main.c file.
+
+```c
+#include <stdio.h>
+#include "utils/utils.h"
+
+int main(void)
+{
+    sayHi("dave");
+    return 0;
+}
+```
+
+#### Makefile
+Makefile is a file that contains instructions for compiling and running the program.
+
+Create a file called Makefile and add the following code to it.
+
+```makefile
+main: main.c utils/utils.c
+    gcc main.c utils/utils.c -o main
+```
+
+To compile the program, run the following command in the terminal.
+
+```bash
+make
+```
+
+To run the program, run the following command in the terminal.
+
+```bash
+./main
+```
+
+#### Error Handling
+c does not have built in error handling. We have to write our own error handling.
+We will use the errno.h header file to handle errors.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+
+int main(void)
+{
+    FILE *fpointer = fopen("employees.txt", "r"); // r is for read mode
+
+    if (fpointer == NULL)
+    {
+        printf("Error: %d\n", errno);
+        exit(1);
+    }
+
+    char line[255];
+
+    while (fgets(line, 255, fpointer) != NULL)
+    {
+        printf("%s", line);
+    }
+
+    fclose(fpointer);
+
+    return 0;
+}
+```
+
+#### Example 2 of Error Handling using a simple calculator
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+
+int main(void)
+{
+    double num1;
+    double num2;
+
+    printf("Enter first number: ");
+    scanf("%lf", &num1);
+
+    printf("Enter second number: ");
+    scanf("%lf", &num2);
+
+    printf("Answer: %f\n", num1 + num2);
+
+    return 0;
+}
+```
+
+#### Memory Allocation
+Memory allocation is the process of allocating memory during the program execution.
+We use the malloc function to allocate memory.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    int age = 30;
+    double gpa = 3.4;
+    char grade = 'A';
+
+    printf("%p\n", &age);
+    printf("%p\n", &gpa);
+    printf("%p\n", &grade);
+
+    int *pAge = malloc(4); // allocate 4 bytes of memory
+    *pAge = 30;
+    printf("%p\n", pAge);
+    printf("%d\n", *pAge);
+
+    double *pGpa = malloc(8); // allocate 8 bytes of memory
+    *pGpa = 3.4;
+    printf("%p\n", pGpa);
+    printf("%f\n", *pGpa);
+
+    char *pGrade = malloc(1); // allocate 1 byte of memory
+    *pGrade = 'A';
+    printf("%p\n", pGrade);
+    printf("%c\n", *pGrade);
+
+    return 0;
+}
+```
+
+
+#### Freeing Memory
+We use the free function to free up memory.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    int age = 30;
+    double gpa = 3.4;
+    char grade = 'A';
+
+    printf("%p\n", &age);
+    printf("%p\n", &gpa);
+    printf("%p\n", &grade);
+
+    int *pAge = malloc(4); // allocate 4 bytes of memory
+    *pAge = 30;
+    printf("%p\n", pAge);
+    printf("%d\n", *pAge);
+
+    double *pGpa = malloc(8); // allocate 8 bytes of memory
+    *pGpa = 3.4;
+    printf("%p\n", pGpa);
+    printf("%f\n", *pGpa);
+
+    char *pGrade = malloc(1); // allocate 1 byte of memory
+    *pGrade = 'A';
+    printf("%p\n", pGrade);
+    printf("%c\n", *pGrade);
+
+    free(pAge);
+    free(pGpa);
+    free(pGrade);
+
+    return 0;
+}
+```
+
+
+#### dynamic arrays
+We can use the malloc function to create dynamic arrays.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    int size;
+    printf("Enter size of array: ");
+    scanf("%d", &size);
+
+    int *nums = malloc(size * sizeof(int)); // allocate memory for the array
+
+    for (int i = 0; i < size; i++)
+    {
+        nums[i] = i + 1;
+    }
+
+    for (int i = 0; i < size; i++)
+    {
+        printf("%d\n", nums[i]);
+    }
+
+    free(nums); // free up memory
+
+    return 0;
+}
+```
+
+
+#### realloc
+We can use the realloc function to resize an array.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    int size;
+    printf("Enter size of array: ");
+    scanf("%d", &size);
+
+    int *nums = malloc(size * sizeof(int)); // allocate memory for the array
+
+    for (int i = 0; i < size; i++)
+    {
+        nums[i] = i + 1;
+    }
+
+    for (int i = 0; i < size; i++)
+    {
+        printf("%d\n", nums[i]);
+    }
+
+    printf("Enter new size of array: ");
+    scanf("%d", &size);
+
+    nums = realloc(nums, size * sizeof(int)); // resize the array
+
+    for (int i = 0; i < size; i++)
+    {
+        nums[i] = i + 1;
+    }
+
+    for (int i = 0; i < size; i++)
+    {
+        printf("%d\n", nums[i]);
+    }
+
+    free(nums); // free up memory
+
+    return 0;
+}
+```
+
+
+#### fgets
+fgets is used to read a line of text from a file.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    char line[255];
+    FILE *fpointer = fopen("employees.txt", "r"); // r is for read mode
+
+    while (fgets(line, 255, fpointer) != NULL)
+    {
+        printf("%s", line);
+    }
+
+    fclose(fpointer);
+
+    return 0;
+}
+```
+
+#### fscanf
+fscanf is used to read a line of text from a file.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    char line[255];
+    FILE *fpointer = fopen("employees.txt", "r"); // r is for read mode
+
+    while (fscanf(fpointer, "%s", line) != EOF)
+    {
+        printf("%s\n", line);
+    }
+
+    fclose(fpointer);
+
+    return 0;
+}
+```
+
+#### fgetc
+fgetc is used to read a character from a file.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    char line[255];
+    FILE *fpointer = fopen("employees.txt", "r"); // r is for read mode
+
+    char c = fgetc(fpointer);
+    while (c != EOF)
+    {
+        printf("%c", c);
+        c = fgetc(fpointer);
+    }
+
+    fclose(fpointer);
+
+    return 0;
+}
+```
+
+#### fputc
+fputc is used to write a character to a file.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    FILE *fpointer = fopen("employees.txt", "w"); // w is for write mode
+
+    fputc('A', fpointer);
+    fputc('B', fpointer);
+    fputc('C', fpointer);
+
+    fclose(fpointer);
+
+    return 0;
+}
+```
+
+#### fputs
+fputs is used to write a string to a file.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    FILE *fpointer = fopen("employees.txt", "w"); // w is for write mode
+
+    fputs("Hello World", fpointer);
+
+    fclose(fpointer);
+
+    return 0;
+}
+```
+
+
+#### Command Line Arguments
+Command line arguments are arguments passed to the program when it is executed.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[])
+{
+    printf("Number of arguments: %d\n", argc);
+
+    for (int i = 0; i < argc; i++)
+    {
+        printf("Argument %d: %s\n", i, argv[i]);
+    }
+
+    return 0;
+}
+```
+
+#### Example 2 of Command Line Arguments
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[])
+{
+    double num1 = atof(argv[1]);
+    double num2 = atof(argv[2]);
+
+    printf("Answer: %f\n", num1 + num2);
+
+    return 0;
+}
+```
+
+#### type cast
+type cast is used to convert one data type to another.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+    int num1 = 6;
+    int num2 = 5;
+
+    printf("%d\n", num1 / num2); // 6 / 5 = 1
+
+    printf("%f\n", (double)num1 / num2); // 6.000000 / 5 = 1.200000
 
     return 0;
 }
